@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>កែផលិតផល</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+</head>
+
+<body>
+    <main>
+        <div class="row m-0">
+            <div class="col-2 side-bar p-0">
+                <div class="logo py-3">
+                    <a href="/home" class="d-flex align-items-center justify-content-center p-3">
+                        <img th:src="@{/img/logo/logo-no-background.png}" alt="">
+                    </a>
+                </div>
+                <div class="menu">
+                    <div id="menu-item" >
+                        <a href="/home"><span><i class="fa-solid fa-house fs-6"></i> Dashboard</span></a>
+                    </div>
+                    <div id="menu-item" th:if="${isAdmin}">
+                        <a href="/home"><span><i class="fa-solid fa-user"></i> User</span></a>
+                    </div>
+                    <div id="menu-item">
+                        <a href="/home"><span><i class="fa-solid fa-cart-shopping"></i> POS</span></a>
+                    </div>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="fa-solid fa-database"></i>&nbsp;Product Managemennt
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="accordion-body ">
+                                        
+                                        <ul class="nav nav-pills mb-3 justify-content-center sub-menu-list d-flex flex-column" id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active fw-bolder" id="pills-product-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-product" type="button" role="tab" aria-controls="pills-product"
+                                                    aria-selected="true">- Product List</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link fw-bolder" id="pills-stock-in-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-stock-in" type="button" role="tab" aria-controls="pills-stock-in"
+                                                    aria-selected="false">- Stock-In</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link fw-bolder" id="pills-stock-out-tab" data-bs-toggle="pill"
+                                                    data-bs-target="#pills-stock-out" type="button" role="tab" aria-controls="pills-stock-out"
+                                                    aria-selected="false">- Stock-Out</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="fa-solid fa-table"></i></i>&nbsp;Report&nbsp;&nbsp;&nbsp;<i class="bi bi-chevron-down fw-bold"></i></button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <ul class="sub-menu-list">
+                                        <li><a href="/monthlyProductSales">Monthly Sale </a></li>
+                                        <li><a href="/monthlySales">Monthly Fiancial </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+
+                    
+                </div>
+            </div>
+
+
+            <div class="col-10 main-panel p-0">
+                <div class="container-fluid p-0">
+                    <nav class="navbar navbar-expand-sm navbar-light bg-light p-2">
+                        <div class="container">
+                            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse p-0" id="collapsibleNavId">
+                                <h6>Hi, <span th:text="${appUser.firstname}"></span>&nbsp;<span th:text="${appUser.lastname}"></span></h6>
+
+                                <div class="ms-auto">
+                                    <a class="btn btn-outline-danger my-2 my-sm-0" href="/logout">
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                </div>
+                <section class="product">
+                    <div class="container">
+                        <a class="btn btn-primary mt-3" href="/product" role="button">Back to Product</a>
+                        <div class="edit_product mx-auto">
+                            <h2 class="text-center">Edit Product</h2>
+            
+                            
+                            <form class="form-floating bg-white w-50 p-4 mx-auto rounded-3 border"
+                                th:action="@{/product/edit}" method="post" th:object="${productDTO}">
+                                <input type="hidden" th:field="*{id}" />
+                                <div class="form-floating mb-3">
+                                    <input class="form-control-plaintext" id="id" th:value="${product.id}" readonly>
+                                    <label for="id">ID</label>
+                                </div>
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="name" th:field="*{name}">
+                                    <label for="name">Name</label>
+                                    <p th:if="${#fields.hasErrors('name')}" th:errorclass="text-danger" th:errors="*{name}"></p>
+                                </div>
+            
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="qty" th:field="*{quantity}">
+                                    <label for="qty">Qty</label>
+                                    <p th:if="${#fields.hasErrors('quantity')}" th:errorclass="text-danger"
+                                        th:errors="*{quantity}"></p>
+                                </div>
+            
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="price" type="number" min="0" step="0.01"
+                                        th:field="*{price}">
+                                    <label for="price">Price($)</label>
+                                    <p th:if="${#fields.hasErrors('price')}" th:errorclass="text-danger" th:errors="*{price}">
+                                    </p>
+                                </div>
+            
+                                <div class="form-floating mb-3">
+                                    <select class="form-select" id="Category" th:field="*{category_id}">
+                                        <option value="" selected disabled>---Select a category---</option>
+                                        <option th:each="category : ${categories}" th:value="${category.id}"
+                                            th:text="${category.name}"></option>
+                                    </select>
+                                    <label for="Category">Category</label>
+                                    <p th:if="${#fields.hasErrors('category_id')}" th:errorclass="text-danger"
+                                        th:errors="*{category_id}"></p>
+                                </div>
+            
+                                <div class="form-floating mb-3">
+                                    <select id="status" class="form-select" th:field="*{status}">
+                                        <option value="Available">Available</option>
+                                        <option value="Unavailable">Unavailable</option>
+                                    </select>
+                                    <label for="status">Status</label>
+                                    <p th:if="${#fields.hasErrors('status')}" th:errorclass="text-danger" th:errors="*{status}">
+                                    </p>
+                                </div>
+            
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="description" th:field="*{description}">
+                                    <label for="description">Description</label>
+                                    <p th:if="${#fields.hasErrors('description')}" th:errorclass="text-danger"
+                                        th:errors="*{description}"></p>
+                                </div>
+            
+                                <div class="form-floating mb-3">
+                                    <select id="supplier" class="form-select" th:field="*{supplier_id}">
+                                        <option value="" selected disabled>--Select a supplier--</option>
+                                        <option th:each="supplier : ${suppliers}" th:value="${supplier.id}"
+                                            th:text="${supplier.name}"></option>
+                                    </select>
+                                    <label for="supplier">Supplier</label>
+                                    <p th:if="${#fields.hasErrors('supplier_id')}" th:errorclass="text-danger"
+                                        th:errors="*{supplier_id}"></p>
+                                </div>
+            
+                                <div class="action-button d-flex justify-content-center">
+                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                    <a name="" id="" class="btn btn-outline-danger" href="/product" role="button">Cancel</a>
+                                </div>
+                            </form>
+            
+                        </div>
+            
+                    </div>
+            
+                </section>
+                
+            </div>
+        </div>
+
+    </main>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

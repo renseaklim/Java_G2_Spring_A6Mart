@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ផលិតផល</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+</head>
+
+<body>
+    <main>
+        <div class="row m-0">
+            <div class="col-2 side-bar p-0">
+                <div class="logo py-3">
+                    <a href="/home" class="d-flex align-items-center justify-content-center p-3">
+                        <img th:src="@{/img/logo/logo-no-background.png}" alt="">
+                    </a>
+                </div>
+                <div class="menu">
+                    <div id="menu-item">
+                        <a href="/home"><span><i class="fa-solid fa-house fs-6"></i> Dashboard</span></a>
+                    </div>
+                    <div id="menu-item" th:if="${isAdmin}">
+                        <a href="/home"><span><i class="fa-solid fa-user"></i> User</span></a>
+                    </div>
+                    <div id="menu-item">
+                        <a href="/pos"><span><i class="fa-solid fa-cart-shopping"></i> POS</span></a>
+                    </div>
+                    <div class="accordion" id="accordionExample">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    <i class="fa-solid fa-database"></i>&nbsp;Product<i
+                                        class="ms-2 bi bi-chevron-down fw-bold"></i>
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse show"
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <div class="accordion-body ">
+
+                                        <ul class="nav nav-pills mb-3 justify-content-center sub-menu-list d-flex flex-column"
+                                            id="pills-tab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active fw-bolder" id="pills-product-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#pills-product" type="button"
+                                                    role="tab" aria-controls="pills-product" aria-selected="true">-
+                                                    Product List</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link fw-bolder" id="pills-stock-in-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#pills-stock-in" type="button"
+                                                    role="tab" aria-controls="pills-stock-in" aria-selected="false">-
+                                                    Stock-In</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link fw-bolder" id="pills-stock-out-tab"
+                                                    data-bs-toggle="pill" data-bs-target="#pills-stock-out"
+                                                    type="button" role="tab" aria-controls="pills-stock-out"
+                                                    aria-selected="false">- Stock-Out</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="accordion-item ">
+                            <h2 class="accordion-header ">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="fa-solid fa-table"></i></i>&nbsp;Report&nbsp;&nbsp;&nbsp;<i class="bi bi-chevron-down fw-bold"></i></button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse "
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <ul class="sub-menu-list">
+                                        <li><a href="/monthlyProductSales">Monthly Sale </a></li>
+                                        <li><a href="/monthlySales">Monthly Fiancial </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+
+
+                </div>
+            </div>
+
+
+            <div class="col-10 main-panel p-0">
+                <div class="container-fluid p-0">
+                    <nav class="navbar navbar-expand-sm navbar-light bg-light p-2">
+                        <div class="container">
+                            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse p-0" id="collapsibleNavId">
+                                <h6>Hi, <span th:text="${appUser.firstname}"></span>&nbsp;<span
+                                        th:text="${appUser.lastname}"></span></h6>
+
+                                <div class="ms-auto">
+                                    <form action="/logout" method="post" style="display:inline;">
+                                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                        <button class="btn btn-outline-danger" type="submit">Logout</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                </div>
+                <section class="product">
+                    <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-product" role="tabpanel"
+                            aria-labelledby="pills-product-tab" tabindex="0">
+                            <section class="product pb-5">
+                                <div class="container">
+                                    <a class="btn btn-primary my-3" href="/product/create" role="button">Create
+                                        Product</a>
+                                    <h1>Product</h1>
+                                    <table class="table table-hover product_table">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                                <th>Qty</th>
+                                                <th>Category</th>
+                                                <th>SupplierID</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="product : ${products}">
+                                                <td class="bg-warning" th:text="${product.id}"></td>
+                                                <td th:text="${product.name}"></td>
+                                                <td th:text="@{'$' + ${product.price}}"></td>
+                                                <td th:text="${product.quantity}"></td>
+                                                <td th:text="${product.category.name}"></td>
+                                                <td th:text="${product.supplier.id}"></td>
+                                                <td th:text="${product.description}"></td>
+                                                <td th:text="${product.status}"></td>
+                                                <td>
+                                                    <a class="btn btn-primary" role="button"
+                                                        th:href="@{/product/edit(id=${product.id})}">Edit</a>
+                                                    <a class="btn btn-outline-danger" role="button"
+                                                        th:href="@{/product/delete(id=${product.id})}"
+                                                        onclick="return confirm('Are you sure?')">Delete</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </section>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-stock-in" role="tabpanel"
+                            aria-labelledby="pills-stock-in-tab" tabindex="0">
+                            <div class="stock_in pb-5">
+                                <div class="container">
+                                    <h1>Stock-In</h1>
+                                    <section class="stock-in">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-warning mb-3" data-bs-toggle="modal"
+                                            data-bs-target="#addStock">
+                                            Add Stock
+                                        </button>
+                                        <table class="table table-hover stockin_table">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Product Name</th>
+                                                    <th>Total Cost</th>
+                                                    <th>Qty</th>
+                                                    <th>StockIn Date</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="stockin : ${stockIns}">
+                                                    <td class="bg-success-subtle" th:text="${stockin.id}"></td>
+                                                    <td th:text="${stockin.product.name}"></td>
+                                                    <td th:text="@{'$' + ${stockin.cost}}"></td>
+                                                    <td th:text="${stockin.quantity}"></td>
+                                                    <td th:text="${stockin.date.toString().substring(0, 10)}"></td>
+                                                    <td>
+                                                        <a class="btn btn-primary" role="button"
+                                                            th:href="@{/product/editStock(id=${stockin.id})}">Edit
+                                                            Stock</a>
+                                                        <a class="btn btn-outline-danger" role="button"
+                                                            th:href="@{/product/deleteStock(id=${stockin.id})}"
+                                                            onclick="return confirm('Are you sure?')">Delete</a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" data-bs-backdrop="static" id="addStock" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Add Stock
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form
+                                                            class="form-floating bg-white w-50 p-4 mx-auto rounded-3 border"
+                                                            th:action="@{/product}" method="post"
+                                                            th:object="${stockinDTO}">
+                                                            <div class="form-floating mb-3">
+                                                                <select class="form-select" id="name"
+                                                                    th:field="*{product_id}">
+                                                                    <option value="" selected disabled>---Select Product
+                                                                        name---
+                                                                    </option>
+                                                                    <option th:each="product : ${products}"
+                                                                        th:value="${product.id}"
+                                                                        th:text="${product.name}"></option>
+                                                                </select>
+                                                                <label for="name">Product name</label>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <input class="form-control" id="qty"
+                                                                    th:field="*{quantity}">
+                                                                <label for="qty">Qty</label>
+                                                                <p th:if="${#fields.hasErrors('quantity')}"
+                                                                    th:errorclass="text-danger" th:errors="*{quantity}">
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="form-floating mb-3">
+                                                                <input class="form-control" id="cost" type="number"
+                                                                    min="0" step="0.01" th:field="*{cost}">
+                                                                <label for="cost">Total Cost($)</label>
+                                                                <p th:if="${#fields.hasErrors('cost')}"
+                                                                    th:errorclass="text-danger" th:errors="*{cost}">
+                                                                </p>
+                                                            </div>
+
+                                                            <div class="action-button d-flex justify-content-center">
+                                                                <button type="submit"
+                                                                    class="btn btn-primary me-2">Submit</button>
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </section>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="pills-stock-out" role="tabpanel"
+                            aria-labelledby="pills-stock-out-tab" tabindex="0">
+                            <div class="container">
+                                <h1>Out of Stock Products</h1>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Qty</th>
+                                            <th>Category</th>
+                                            <th>SupplierID</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="product : ${outOfStockProducts}">
+                                            <td class="bg-warning" th:text="${product.id}"></td>
+                                            <td th:text="${product.name}"></td>
+                                            <td th:text="@{'$' + ${product.price}}"></td>
+                                            <td th:text="${product.quantity}"></td>
+                                            <td th:text="${product.category.name}"></td>
+                                            <td th:text="${product.supplier.id}"></td>
+                                            <td th:text="${product.description}"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

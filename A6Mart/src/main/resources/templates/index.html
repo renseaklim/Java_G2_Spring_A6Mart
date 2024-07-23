@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/bootstrap.css}">
+
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid p-0">
+            <nav class="navbar navbar-expand-sm navbar-light bg-light p-0">
+                <div class="container">
+                    <img class="p-1" th:src="@{/img/logo/logo-no-background.png}" alt="" style="height: 50px;">
+
+                    <div class="collapse navbar-collapse p-0" id="collapsibleNavId">
+
+                        <div class="mx-3 ms-auto">
+                            <a class="btn btn-primary my-2 mx-2" href="/login">
+                                Login
+                            </a>
+                            <a class="btn btn-outline-danger my-2 my-sm-0" href="/register">
+                                Register
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+        <section class="welcome-hero w-100 position-relative d-flex flex-column align-items-center justify-content-center">
+            <img class="w-25" th:src="@{/img/logo/logo-no-background.png}" alt="">
+            <div class="hero-bg w-100 h-100 position-absolute">
+                <img class="w-100 h-100" th:src="@{/img/logo/grocery.jpg}" alt="">
+            </div>
+
+            <h1 class="display-1 fw-bolder text-secondary-emphasis">សូមស្វាគមន៍មកកាន់​</h1>
+            <h1 class="display-1 fw-bolder text-primary">A6 <span class="text-danger">ម៉ាត់</span></h1>
+            <div class="button">
+                <a name="" id="" class="btn btn-outline-primary fw-bolder" href="/login" role="button">Login</a>
+                <a name="" id="" class="btn btn-outline-danger fw-bolder" href="/register" role="button">Register</a>
+
+            </div>
+        </section>
+    </main>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

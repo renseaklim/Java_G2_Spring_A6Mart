@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>POS</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+</head>
+
+<body>
+    <main>
+        <div class="row m-0">
+            <div class="col-2 side-bar p-0">
+                <div class="logo py-3">
+                    <a href="/home" class="d-flex align-items-center justify-content-center p-3">
+                        <img th:src="@{/img/logo/logo-no-background.png}" alt="">
+                    </a>
+                </div>
+                <div class="menu">
+                    <div id="menu-item">
+                        <a href="/home"><span><i class="fa-solid fa-house fs-6"></i> Dashboard</span></a>
+                    </div>
+                    <div id="menu-item" th:if="${isAdmin}">
+                        <a href="/home"><span><i class="fa-solid fa-user"></i> User</span></a>
+                    </div>
+                    <div id="menu-item" class="active-item">
+                        <a href="/pos"><span class="active-item"><i class="fa-solid fa-cart-shopping"></i>
+                                POS</span></a>
+                    </div>
+                    <div id="menu-item">
+                        <a href="/product" class="pe-3"><span><i class="fa-solid fa-database"></i>&nbsp;Product<i
+                                    class="bi bi-chevron-down fw-bold ms-2"></i></span> </a>
+                    </div>
+                    <div class="accordion" id="accordionExample">
+<!-- 
+                        <div class="accordion-item ">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <i class="fa-solid fa-table"></i></i>&nbsp;Report&nbsp;&nbsp;&nbsp;<i class="bi bi-chevron-down fw-bold"></i></button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse "
+                                data-bs-parent="#accordionExample">
+                                <div class="accordion-body">
+                                    <ul class="sub-menu-list">
+                                        <li><a href="/monthlyProductSales">Monthly Sale </a></li>
+                                        <li ><a href="/monthlySales">Monthly Fiancial </a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div> -->
+
+                    </div>
+
+
+                </div>
+            </div>
+
+            <div class="col-10 main-panel p-0">
+                <div class="container-fluid p-0">
+                    <nav class="navbar navbar-expand-sm navbar-light bg-light p-2">
+                        <div class="container">
+                            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
+                                aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse p-0" id="collapsibleNavId">
+                                <h6>Hi, <span th:text="${appUser.firstname}"></span>&nbsp;<span th:text="${appUser.lastname}"></span></h6>
+
+                                <div class="ms-auto">
+                                    <a class="btn btn-outline-danger my-2 my-sm-0" href="/logout">
+                                        Logout
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </nav>
+
+                </div>
+                <section class="pos">
+                    <div class="container">
+                        <h4 class="mt-4 text-success">Point of Sale (POS) System</h4>
+                        <div class="row">
+                            <div class="col-8">
+                                <!-- Search Bar -->
+                                <div class="mt-4">
+                                    <form th:action="@{/pos}" method="post" th:object="${addItem}">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                <div class="form-floating">
+                                                    <input type="text" class="form-control" id="search"
+                                                        placeholder="Search by Product ID or Scan BarCode"
+                                                        th:field="${addItem.id}">
+                                                    <label class="ps-2" for="search">Search By ID or Scan
+                                                        Barcode</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn btn-primary ms-2">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Product Table -->
+                                <div class="mt-4">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Name</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:if="${foundProduct != null}">
+                                                <td th:text="${foundProduct.id}"></td>
+                                                <td th:text="${foundProduct.name}"></td>
+                                                <td th:text="@{'$' + ${foundProduct.price}}"></td>
+                                                <td th:text="${foundProduct.quantity}"></td>
+                                                <td>
+                                                    <a class="btn btn-primary" role="button"
+                                                        th:href="@{/pos/addToCart(id=${foundProduct.id})}">Add to
+                                                        Cart</a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- Cart Form -->
+                                <div class="mt-4">
+                                    <form th:action="@{/pos/addToCart/sell}" method="post" th:object="${sellItemDTO}"
+                                        class="p-3 bg-warning-subtle border rounded-3">
+                                        <label for="productId">Product ID</label>
+                                        <input class="form-control" th:value="${foundProduct.id}"
+                                            th:field="*{productId}" readonly>
+
+                                        <label for="name">Name</label>
+                                        <input class="form-control" th:value="${foundProduct.name}" th:field="*{name}"
+                                            readonly>
+
+                                        <label for="price">Price</label>
+                                        <input class="form-control" th:value="${foundProduct.price}" th:field="*{price}"
+                                            readonly>
+
+                                        <label for="quantity">Qty</label>
+                                        <input type="number" class="form-control" th:field="*{quantity}">
+
+                                        <div class="mt-3">
+                                            <button type="submit" class="btn btn-primary ms-2">Add to Cart</button>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+
+                            <!--CheckOut Table -->
+                            <div class="col-4 ">
+                                <!-- CheckOut Table -->
+
+                                <div class="mt-4">
+                                    <h5 class="mb-3 text-warning">Cart Table</h5>
+                                    <form th:action="@{/pos/receipt}" method="post" th:object="${receiptDTO}"
+                                        class="p-3 bg-warning-subtle border rounded-3">
+                                        <table class="table table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product ID</th>
+                                                    <th>Name</th>
+                                                    <th>Price</th>
+                                                    <th>Quantity</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="item : ${cart}">
+                                                    <td th:text="${item.productId}"></td>
+                                                    <td th:text="${item.name}"></td>
+                                                    <td th:text="${item.price}"></td>
+                                                    <td th:text="${item.quantity}"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="mt-3">
+                                            <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal">View
+                                                Receipt</button>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1"
+                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                                            Receipt/បង្កាន់ដៃ
+                                                        </h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body" id="receipt">
+                                                        <div class="receipt-header mx-auto text-center">
+                                                            <img th:src="@{/img/logo/logo-black.png}" alt="">
+                                                            <p>សូមស្វាគមន៍មកកាន់ A6 Mart</p>
+                                                        </div>
+                                                        <p class="">Receipt No: <span
+                                                                th:text="${lastestReceiptnum}"></span></p>
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Pro ID</th>
+                                                                    <th>Name</th>
+                                                                    <th>Price</th>
+                                                                    <th>Quantity</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr th:each="item : ${cart}">
+                                                                    <td class="bg-transparent"
+                                                                        th:text="${item.productId}"></td>
+                                                                    <td class="bg-transparent" th:text="${item.name}">
+                                                                    </td>
+                                                                    <td class="bg-transparent"
+                                                                        th:text="@{'$' + ${item.price}}"></td>
+                                                                    <td class="bg-transparent"
+                                                                        th:text="${item.quantity}"></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <h6 class="text-end me-4">Total Cost: $<span class="fw-bolder"
+                                                                th:text="${totalItemCost}"></span></h6>
+                                                        <p class="fw-bold p-0 m-0">DATETIME: </p>
+                                                        <span th:text="${currentDate}"></span>
+                                                        <p>សូមអរគុណ🙏</p>
+
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="sumbit" class="btn btn-primary">Checkout
+                                                        </button>
+                                                        <a id="print" role="button" href="" class="btn btn-success">Print
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                </section>
+
+            </div>
+        </div>
+
+    </main>
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+    <script>
+        const printBtn = document.getElementById('print');
+        printBtn.addEventListener('click', function () {
+            print();
+         })
+    </script>
+
+</body>
+
+</html>

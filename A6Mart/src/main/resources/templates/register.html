@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <link rel="stylesheet" href="" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="" th:href="@{/css/bootstrap.css}">
+
+</head>
+
+<body>
+    <header>
+        <div class="container-fluid p-0">
+            <nav class="navbar navbar-expand-sm navbar-light bg-light p-0">
+                <div class="container">
+                    <img class="p-1" th:src="@{/img/logo/logo-no-background.png}" alt="" style="height: 50px;">
+
+
+                    <div class="collapse navbar-collapse p-0" id="collapsibleNavId">
+
+                        <div class="mx-3 ms-auto">
+                            <a class="btn btn-primary my-2 mx-2" href="/login">
+                                Login
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+    </header>
+
+    <section class="welcome-hero w-100 h-auto position-relative d-flex flex-column align-items-center">
+
+        <div class="hero-bg w-100 h-100 position-absolute">
+            <img class="w-100 h-100" th:src="@{/img/logo/grocery.jpg}" alt="">
+        </div>
+        <h1 class="fw-bolder text-secondary-emphasis">Create a new account</h1>
+        <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+            <h4 class="text-success">Account Created Successfully!</h4>
+            <a href="/login" class="ms-2 btn btn-primary">Login</a>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <!-- form -->
+        <form class="form-floating bg-white w-50 p-4 mb-4 shadow-sm rounded-2" method="post"
+            th:object="${registerDTO}">
+            <div class="form-floating mb-3">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" id="fname" th:field="${registerDTO.firstname}">
+                <label for="fname">First Name</label>
+                <p th:if="${#fields.hasErrors('firstname')}" th:errorclass="text-danger"
+                    th:errors="${registerDTO.firstname}"></p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input class="form-control" id="lname" th:field="${registerDTO.lastname}">
+                <label for="lname">Last Name</label>
+                <p th:if="${#fields.hasErrors('lastname')}" th:errorclass="text-danger"
+                    th:errors="${registerDTO.lastname}"></p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input class="form-control" id="email" type="email" th:field="${registerDTO.email}">
+                <label for="email">Email</label>
+                <p th:if="${#fields.hasErrors('email')}" th:errorclass="text-danger" th:errors="${registerDTO.email}">
+                </p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input class="form-control" id="phone" th:field="${registerDTO.phone}">
+                <label for="phone">phone</label>
+                <p th:if="${#fields.hasErrors('phone')}" th:errorclass="text-danger" th:errors="${registerDTO.phone}">
+                </p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input class="form-control" id="address" th:field="${registerDTO.address}">
+                <label for="address">Address</label>
+                <p th:if="${#fields.hasErrors('address')}" th:errorclass="text-danger"
+                    th:errors="${registerDTO.address}"></p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <select class="form-select" id="role" th:field="${registerDTO.role}">
+                    <option value="Staff">Staff</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <label for="role">Role</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input class="form-control" id="password" type="password" th:field="${registerDTO.password}">
+                <label for="password">Password</label>
+                <p th:if="${#fields.hasErrors('password')}" th:errorclass="text-danger"
+                    th:errors="${registerDTO.password}"></p>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input class="form-control" id="confirmPassword" type="password"
+                    th:field="${registerDTO.confirmPassword}">
+                <label for="confirmPassword">confirm Password</label>
+                <p th:if="${#fields.hasErrors('confirmPassword')}" th:errorclass="text-danger"
+                    th:errors="${registerDTO.confirmPassword}"></p>
+            </div>
+
+            <button type="submit" class="btn btn-outline-primary me-2">
+                Submit
+            </button>
+            <a name="" id="" class="btn btn-outline-danger" href="/" role="button">Cancel</a>
+
+        </form>
+
+
+    </section>
+
+    <script type="text/javascript" th:src="@{/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

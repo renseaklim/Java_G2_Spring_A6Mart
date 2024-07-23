@@ -1,0 +1,231 @@
+@import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap');
+
+body {
+    font-family: "Kantumruy Pro", sans-serif !important;
+    background-color: #F5F7FD !important;
+    position: relative;
+}
+
+.navbar {
+    background-color: #FFFFFF;
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    border: 1px solid #dfdfdf;
+}
+
+main {
+    position: relative;
+}
+
+.side-bar{
+    height: 100vh;
+    background-color: #1A2035;
+
+}
+
+.side-bar .logo{
+    background-color: #1A2035;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.side-bar .logo img{
+    width: 70%;
+    height: 70%;
+}
+
+.side-bar .menu{
+    width: 100%;
+    overflow: auto;
+}
+
+.active-item{
+    background-color: #161B2C;
+    color: white;
+}
+
+
+
+#menu-item{
+    padding: 16px 0;
+    width: 100%;
+    height: 55px;
+}
+
+#menu-item:hover{
+    background-color: #161B2C;
+}
+
+#menu-item:hover a{
+    color: white;
+}
+#menu-item:hover{
+    background-color: #161B2C;
+}
+#menu-item a{
+    width: 100%;
+    padding: 16px 130px 16px 22px;
+    text-align: left;
+    text-decoration: none;
+    color: #dfdfdf;
+}
+
+
+.sub-menu-list li{
+    height: 55px;
+    line-height: 55px;
+}
+
+.sub-menu-list li:hover{
+    background-color: #161B2C;
+}
+.sub-menu-list li:hover a{
+    color:white;
+}
+.sub-menu-list li a{
+    padding: 16px 70px 16px 0;
+    text-align: left;
+    text-decoration: none;
+    color: #dfdfdf;
+}
+
+.accordion-item{
+    border: none !important;
+    background-color: transparent  !important;
+}
+
+.accordion-button.collapsed{
+    border-radius: 0 !important;
+    background-color: #1A2035 !important;
+    color: #dfdfdf;
+
+}
+.accordion-button.collapsed:hover{
+    background-color: #161B2C !important;
+    color: white;
+}
+.accordion-button:not(.collapsed){
+    background-color: #161B2C !important;
+    color: #dfdfdf !important;
+    
+}
+.accordion-body{
+    background-color: #161B2C !important;
+    padding:0 !important;
+}
+
+.main-panel{
+    height: 100vh;
+    overflow: auto;
+}
+
+td{
+    background-color: #ffe1c0 !important;
+}
+
+
+.navbar-nav .nav-item {
+    padding: 10px 20px;
+}
+
+.navbar-nav .nav-item.active {
+    background-color: #1A2035;
+}
+
+.navbar-nav .nav-item .nav-link.active {
+    padding: 10px 20px;
+    color: white;
+}
+
+.navbar-nav .nav-item .nav-link {
+    font-weight: bolder;
+    font-size: 15px;
+}
+
+.navbar-nav .nav-item:hover {
+    background-color: #1A2035;
+}
+
+.navbar-nav .nav-item:hover .nav-link {
+    color: white;
+}
+
+/* register */
+
+/* Nav tab*/
+
+
+.nav-pills .nav-item button{
+    width: 100%;
+    height: 40px;
+    text-align: start;
+    line-height: 40px;
+    color: #dfdfdf;
+    padding: 0 15px !important;
+}
+
+.nav-pills .nav-link.active{
+    background-color: #dfdfdf92 !important;
+    color: #161B2C;
+}
+.sub-menu-actuive{
+    background-color: #dfdfdf92 !important;
+    color: #161B2C;
+}
+.accordion-button:not(.collapsed) i{
+    transform: rotate(180deg);
+}
+
+.receipt-header{
+    width: 100%;
+}
+
+.receipt-header img{
+    width: 150px;
+}
+
+@media print {
+    body {
+        visibility: hidden;
+    }
+    #receipt {
+        visibility: visible;
+        position: absolute;
+        width: 95%;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}
+
+/* User Webpage */
+.user_table{
+    height: 92vh;
+}
+
+/* homepage */
+.insight-card{
+    height: 120px;
+}
+.insight-card .icon{
+    width: 50px;
+    height: 50px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.insight-card .content{
+    padding: 0 10px;
+}
+
+/* index page */
+.welcome-hero{
+    height: 92vh;
+}
+.welcome-hero .hero-bg{
+    height: 92vh;
+    z-index: -1;
+}
